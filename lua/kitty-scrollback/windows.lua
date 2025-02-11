@@ -68,6 +68,19 @@ M.paste_winopts = function(row, col, height_offset)
   return winopts
 end
 
+M.is_paste_window_focused = function()
+  return vim.api.nvim_get_current_buf() == p.paste_bufid
+end
+
+M.toggle_paste_window = function(start_insert)
+  if M.is_paste_window_focused() then
+    vim.cmd.stopinsert()
+    vim.cmd.close({ bang = true })
+  else
+    M.open_paste_window(start_insert)
+  end
+end
+
 M.open_paste_window = function(start_insert)
   vim.cmd.stopinsert()
 
